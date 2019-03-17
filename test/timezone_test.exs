@@ -147,4 +147,16 @@ defmodule TimezoneTests do
 
     assert 63645015540 = Timex.to_gregorian_seconds(Timex.to_datetime(datetime, "Europe/Vienna"))
   end
+
+  test "convert to +XX:XX" do
+    datetime = {{2019, 2, 2}, {9, 0, 0}}
+
+    converted =
+      datetime
+      |> Timex.to_datetime("Etc/UTC")
+      |> Timezone.convert("+08:45")
+      |> Timex.to_erl()
+
+    assert {{2019, 2, 2}, {17, 45, 0}} == converted
+  end
 end

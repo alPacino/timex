@@ -241,6 +241,9 @@ defmodule Timex.Timezone do
     {suffix, secs}
   end
   defp parse_offset(<<?0, h2::utf8, ?:, m1::utf8, m2::utf8>>) do
+    parse_offset(<<h2::utf8, ?:, m1::utf8, m2::utf8>>)
+  end
+  defp parse_offset(<<h2::utf8, ?:, m1::utf8, m2::utf8>>) do
     secs = String.to_integer(<<h2::utf8>>) * 60 * 60
     secs = secs + String.to_integer(<<m1::utf8,m2::utf8>>) * 60
     {<<h2::utf8,?:,m1::utf8,m2::utf8>>, secs}
@@ -251,6 +254,9 @@ defmodule Timex.Timezone do
     {suffix, secs}
   end
   defp parse_offset(<<?0, h2::utf8>>) do
+    parse_offset(<<h2::utf8>>)
+  end
+  defp parse_offset(<<h2::utf8>>) do
     secs = String.to_integer(<<h2::utf8>>) * 60 * 60
     {<<h2::utf8>>, secs}
   end
